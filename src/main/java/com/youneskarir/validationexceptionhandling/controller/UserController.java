@@ -1,8 +1,10 @@
 package com.youneskarir.validationexceptionhandling.controller;
 
 
+import com.youneskarir.validationexceptionhandling.dto.UserRequest;
 import com.youneskarir.validationexceptionhandling.modal.User;
 import com.youneskarir.validationexceptionhandling.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,13 +14,12 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
 
-    @Autowired
     UserService userService;
 
 
     @PostMapping
-    public User createUser(@RequestBody User user){
-        return userService.createUser(user);
+    public User createUser(@RequestBody @Valid UserRequest userRequest){
+        return userService.createUser(userRequest);
     }
 
     @GetMapping
