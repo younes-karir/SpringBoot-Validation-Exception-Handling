@@ -16,6 +16,9 @@ public class UserController {
 
     UserService userService;
 
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @PostMapping
     public User createUser(@RequestBody @Valid UserRequest userRequest){

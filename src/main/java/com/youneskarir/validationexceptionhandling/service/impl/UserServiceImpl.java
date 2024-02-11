@@ -1,6 +1,7 @@
 package com.youneskarir.validationexceptionhandling.service.impl;
 
 
+import com.youneskarir.validationexceptionhandling.advice.UserNotFoundException;
 import com.youneskarir.validationexceptionhandling.dto.UserRequest;
 import com.youneskarir.validationexceptionhandling.modal.User;
 import com.youneskarir.validationexceptionhandling.repository.UserRepository;
@@ -13,8 +14,11 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
     UserRepository userRepository;
+
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public User createUser(UserRequest userRequest) {
@@ -30,6 +34,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUser(Long id) {
+
+        if(userRepository.findById(id).isEmpty())
+            throw new UserNotFoundException("user not found");
         return userRepository.findById(id).get();
     }
 

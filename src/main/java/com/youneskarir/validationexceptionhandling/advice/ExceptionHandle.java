@@ -1,6 +1,8 @@
 package com.youneskarir.validationexceptionhandling.advice;
 
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -20,4 +22,18 @@ public class ExceptionHandle {
         );
         return errors;
     }
+
+
+    @ExceptionHandler(value = {UserNotFoundException.class})
+    public ResponseEntity<Object> HandleUserNotFoundException
+            (UserNotFoundException userNotFoundException){
+
+        UserException userException = new UserException(
+                userNotFoundException.getMessage(),
+                userNotFoundException.getCause(),
+                HttpStatus.NOT_FOUND
+        );
+        return new ResponseEntity<>(userException,HttpStatus.NOT_FOUND);
+    }
 }
+
