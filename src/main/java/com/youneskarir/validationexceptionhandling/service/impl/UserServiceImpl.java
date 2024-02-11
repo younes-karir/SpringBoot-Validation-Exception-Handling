@@ -1,6 +1,7 @@
 package com.youneskarir.validationexceptionhandling.service.impl;
 
 
+import com.youneskarir.validationexceptionhandling.dto.UserRequest;
 import com.youneskarir.validationexceptionhandling.modal.User;
 import com.youneskarir.validationexceptionhandling.repository.UserRepository;
 import com.youneskarir.validationexceptionhandling.service.UserService;
@@ -16,7 +17,14 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
 
     @Override
-    public User createUser(User user) {
+    public User createUser(UserRequest userRequest) {
+        User user = User.builder()
+                .name(userRequest.getName())
+                .address(userRequest.getAddress())
+                .email(userRequest.getEmail())
+                .age(userRequest.getAge())
+                .salary(userRequest.getSalary())
+                .build();
         return userRepository.save(user);
     }
 
